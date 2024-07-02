@@ -1,53 +1,79 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>
-            Matt Fendt Portfolio
-        </title>
-    </head>
-    <body>
-        <h1>
-            My first website
-        </h1>
-        <h2>
-            An HTML playground
-        </h2>
-        This is my very first website <b> hello </b>
-        <a href="https://www.youtube.com"target="blank">link here</a>
-        <br>
-        <img src="https://via.placeholder.com/350x150" border="10"></img>
-        <br>
-        <ol>
-            <li>apples
-                <ul>granny smith</ul>
-                <ul>golden delish</ul>
-            </li>
-            <li>oranges</li>
-            <li>apples
-                <ul>granny smith</ul>
-                <ul>golden delish</ul>
-            </li>
-        </ol>
+    <main>
+        <section id="about">
+            <h1>About Me</h1>
+            <img src="profile.jpg" alt="Profile Picture">
+            <p>Brief bio about yourself.</p>
+            <h2>Skills</h2>
+            <ul>
+                <li>Skill 1</li>
+                <li>Skill 2</li>
+                <li>Skill 3</li>
+            </ul>
+        </section>
 
-        <table border="1">
-            <tr>
-                <th>Month</th>
-                <th colspan="2">Rent</th>
-                <th>Groceries</th>
-                
-            </tr>
-            <tr>
-                <td>August</td>
-                <td>100 bux</td>
-                <td><a href="https://google.com"target="blank"> not sure</a></td>
-                <td>left kidney</td>
-            </tr>
-        </table>
-    </body>
-    
-     
+        <section id="portfolio">
+            <h1>Portfolio</h1>
+            <div class="project">
+                <h2>Project Name</h2>
+                <img src="project1.jpg" alt="Project Screenshot">
+                <p>Description of the project.</p>
+                <a href="https://github.com/username/project1">View on GitHub</a>
+            </div>
+        </section>
+
+        <section id="resume">
+            <h1>Resume</h1>
+            <a href="resume.pdf" download>Download Resume</a>
+            <h2>Work Experience</h2>
+            <p>Details about your work experience.</p>
+            <h2>Education</h2>
+            <p>Details about your education.</p>
+        </section>
+
+        <section id="contact">
+            <h1>Contact</h1>
+            <form action="mailto:your.email@example.com" method="post" enctype="text/plain">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Name</p>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </footer>
+</body>
 </html>
-
