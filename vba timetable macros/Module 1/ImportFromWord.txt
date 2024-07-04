@@ -1,0 +1,112 @@
+Rem Attribute VBA_ModuleType=VBAModule
+Option VBASupport 1
+Sub ImportFromWord()
+    Dim wdApp As Object
+    Dim wdDoc As Object
+    Dim xlApp As Object
+    Dim xlSheet As Object
+    Dim wdTable As Object
+    Dim i As Integer
+    Dim j As Integer
+    Dim nextRow As Integer ' Variable to track the next available row
+    Dim strPath As String
+    Dim strFile As String
+    Dim objFileSystem As Object
+    Dim objFolder As Object
+    Dim objFile As Object
+    Dim ws1 As Worksheet
+    Dim hRow As Integer ' Row counter for column H
+    Dim userName As String
+    
+    
+    userName = Environ("USERNAME")
+    ' Set the path to the folder containing Word documents
+    strPath = "C:\Users\" & userName & "\GLF Schools\de Stafford Staff - LSA Timetables\"
+
+    ' Initialize Word and Excel applications
+    On Error Resume Next
+    Set wdApp = CreateObject("Word.Application")
+    On Error GoTo 0
+    If wdApp Is Nothing Then
+        MsgBox "Error creating Word application.", vbExclamation
+        Exit Sub
+    End If
+    wdApp.Visible = True ' Optional: Make Word visible
+
+    Set xlApp = Excel.Application
+    Set xlSheet = xlApp.ActiveWorkbook.Sheets("Sheet2") ' Change to "Sheet2"
+    Set ws1 = xlApp.ActiveWorkbook.Sheets("Sheet1") ' Reference to Sheet1
+
+    ' Clear the existing file names in column H
+    ws1.Range("H2:H" & ws1.Cells(ws1.Rows.Count, "H").End(xlUp).Row).ClearContents
+
+    ' Initialize row counters
+    nextRow = 1
+    hRow = 2 ' Start populating from H2 in Sheet1
+
+    ' Set up FileSystemObject to work with files and folders
+    Set objFileSystem = CreateObject("Scripting.FileSystemObject")
+    Set objFolder = objFileSystem.GetFolder(strPath)
+
+    ' Loop through each file in the folder
+    For Each objFile In objFolder.Files
+        ' Check if the file is a Word document
+        If objFileSystem.GetExtensionName(objFile.Path) = "docx" Then
+            ' Write the file name before pasting tables
+            xlSheet.Cells(nextRow, 1).Value = objFile.Name
+            nextRow = nextRow + 1 ' Move to the next row for tables
+            
+            ' Attempt to open Word document
+            On Error Resume Next
+            Set wdDoc = wdApp.Documents.Open(objFile.Path)
+            On Error GoTo 0
+            If wdDoc Is Nothing Then
+                MsgBox "Error opening document: " & objFile.Path, vbExclamation
+            Else
+                ' Loop through each table in Word document
+                For Each wdTable In wdDoc.Tables
+                    ' Loop through each row in the table
+                    For i = 1 To wdTable.Rows.Count
+                        ' Loop through each column in the table
+                        For j = 1 To wdTable.Columns.Count
+                            ' Clean the cell value to remove special characters
+                            cleanedValue = CleanText(wdTable.cell(i, j).Range.text)
+                            ' Paste cell value into Excel at the next available row
+                            xlSheet.Cells(nextRow, j).Value = cleanedValue
+                        Next j
+                        ' Move to the next row in Excel
+                        nextRow = nextRow + 1
+                    Next i
+                Next wdTable
+
+                ' Close Word document
+                wdDoc.Close
+            End If
+
+            ' Truncate the file name by 4 characters and write to Sheet1 column H
+            If Len(objFile.Name) > 14 Then
+                ws1.Cells(hRow, "H").Value = Left(objFile.Name, Len(objFile.Name) - 14)
+            Else
+                ws1.Cells(hRow, "H").Value = objFile.Name
+            End If
+            hRow = hRow + 1 ' Move to the next row in column H
+        End If
+    Next objFile
+
+    ' Close Word application
+    wdApp.Quit
+    Set wdApp = Nothing
+    Set xlApp = Nothing
+    Set xlSheet = Nothing
+    Set ws1 = Nothing
+End Sub
+
+Function CleanText(ByVal text As String) As String
+    ' Remove special characters
+    CleanText = Replace(text, Chr(7), "") ' Remove bullet characters
+    CleanText = Replace(CleanText, vbCrLf, " ") ' Replace line breaks with spaces
+    CleanText = Replace(CleanText, vbCr, " ") ' Replace carriage returns with spaces
+    CleanText = Replace(CleanText, vbLf, " ") ' Replace line feeds with spaces
+    CleanText = Replace(CleanText, vbTab, " ") ' Replace tab characters with spaces
+    CleanText = Application.WorksheetFunction.Trim(CleanText) ' Trim leading and trailing spaces
+End Function
