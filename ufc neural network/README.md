@@ -7,5 +7,7 @@ Reads in processed data from the accompanied .csv file before using a deep neura
 Variables that can be changed:
 
 - Arguments of the Optimiser_RMSprop function.
-
+  
 - unseen_up2: The most recent number of fights you want to test your neural network on.
+
+The preprocessed_data.csv file comes from rezan21's github page: https://github.com/rezan21/UFC-Prediction/tree/master/data
