@@ -1,6 +1,8 @@
-Neural network developed with "Neural Networks from Scratch in Python" book. 
+The Ultimate Fighting Championship is the foremost Mixed Martial Arts Promoter. 
 
-Able to predict the outcome of fights with 70% accuracy.
+Here, I have built a neural network that uses past statistics to predict the outcome of MMA Matches in the UFC with 70% accuracy.
+
+Neural network developed with "Neural Networks from Scratch in Python" book. 
 
 Reads in processed data from the accompanied .csv file before using a deep neural network with 256 nodes and 2 hidden layers.
 
