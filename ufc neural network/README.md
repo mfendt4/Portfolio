@@ -1,4 +1,4 @@
-The Ultimate Fighting Championship is the foremost Mixed Martial Arts Promoter. 
+The Ultimate Fighting Championship is the foremost Mixed Martial Arts promoter. 
 
 Here, I have built a neural network that uses past statistics to predict the outcome of MMA Matches in the UFC with 70% accuracy.
 
